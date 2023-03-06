@@ -3,28 +3,31 @@
   <div>
     <div class="single-expression-viewer-content">
       <div class="top-container">
+        <Title>Single expression viewer</Title>
         <div class="info-help">
-          <p>Browse Gene expressions among different tissues. The overview plot on the left shows the highest value of each tissues in the subdivision plot on the right.
-          The gene expression data used here were from these researches:<br>
-          - B73: <a href="https://science.sciencemag.org/content/353/6301/814">Walley J W, Sartor R C, Shen Z, <i>et al</i>. Integration of omic networks in a developmental atlas of maize[J]. Science, 2016, 353(6301): 814-818.</a><br>
-          - SK: <a href="https://www.nature.com/articles/s41588-019-0427-6">Yang N, Liu J, Gao Q, <i>et al</i>. Genome assembly of a tropical maize inbred line provides insights into structural variation and crop improvement[J]. Nature genetics, 2019, 51(6): 1052.</a><br>
-          To search for Maize Gene expression on more tissues/treatments, please visit <a href="http://bar.utoronto.ca/eplant_maize/">ePlant_maize</a> and <a href="https://qteller.maizegdb.org/">MaizeGDB</a>.
+          <p>This tool accepts query of one gene ID,and the expressions of the query gene among different tissues would be plottedboth as heatmap diagram and statistical barplot.Currently,only genes within the genomes storged in the genomics modure of our database are valid.<br>
+          For expressions of gege IDs and/or tissues/treatments not in our database,please visit  <a href="https://science.sciencemag.org/content/353/6301/814">ePlant maize </a>and<a href="https://www.nature.com/articles/s41588-019-0427-6"> MaizeGDB. </a><br>
+          For more detailed usage,please refer to the<a href="http://bar.utoronto.ca/eplant_maize/"> tutorial</a> .
           </p>
         </div>
         <div class="search-container">
+          <span style="margin-right: 20px;">Search</span>
           <el-input
+            clearable
             v-model="expressionCode"
             class="search-input"
           ></el-input>
-          <el-button class="search-button" @click="search">search</el-button>
         </div>
       </div>
     <div class="tissue-overview-content">
-      <div class="svg-title">
-        <h4 >Expression Tissue Overview</h4>
-      </div>
+      <Title>Tissue Overview</Title>
       <div class="svg-viewer-data">
-        <el-button @click="downloadTsv" class="download-TSV">download TSV</el-button>
+        <div @click="downloadTsv" class="download-TSV">
+          <SvgIcon icon-class="download02" color="717171" style="width: 25px;height: 25px;"/>
+        </div>
+        <div  @click="checkBigImg" class="check-big-img">
+          <SvgIcon icon-class="camera" color="19692C" style="width: 25px;height: 25px;"/>
+        </div>
         <img src='@/assets/images/zeamap.svg' />
       </div>
     </div>
@@ -33,16 +36,20 @@
 </template>
 
 <script>
+import SvgIcon from '@/components/CommonComponents/SvgIcon.vue' 
 import Title from "@/components/CommonComponents/Title.vue";
 export default {
   name: "FirstTask",
-  components: { Title },
+  components: { Title, SvgIcon },
   data() {
     return {
       expressionCode: "",
     };
   },
   methods: {
+    checkBigImg() {
+
+    },
     downloadTsv() {
       // 请求下载
     },
@@ -65,7 +72,7 @@ a {
   }
 }
 p {
-  line-height: 26px;
+  line-height: 37px;
   font-size: 16px;
   margin: 15px 0;
 }
@@ -77,7 +84,7 @@ p {
   border-radius: 3px;
   padding: 30px;
   .search-input {
-    width: 30%;
+    width: 40%;
     height: 38px;
     margin-right: 10px;
   }
@@ -94,36 +101,26 @@ p {
     }
   }
 }
+.download-TSV,
+.check-big-img {
+  float: right;
+  margin: 0 10px;
+  opacity: 0.8;
+  &:active {
+    opacity: 1;
+  }
+}
 .svg-viewer-data {
   width: 100%;
   border: 1px solid #EEEEEE;
   border-radius: 5px; 
   padding: 15px 10px;
-  ::v-deep .download-TSV {
-    border: 1px solid $mainColor;
-    color: #fff;
-    font-size: 16px;
-    float: right;
-    background-color: #74C687;
   }
-}
 ::v-deep .el-input__inner {
   height: 38px;
   &:focus {
     border: 1px solid $mainColor;
     box-shadow: 5px 5px  20px #C9E9D0;
-  }
-}
-::v-deep .search-button {
-  background-color: $mainColor;
-  color: #fff;
-  &:hover {
-    cursor: pointer;
-  }
-  &:active {
-    border: 1px solid $mainColor;
-    background-color: $deepMainColor;
-    box-shadow: 0 0  20px #C9E9D0;
   }
 }
 </style>
